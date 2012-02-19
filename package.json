@@ -1,5 +1,5 @@
 {
-  "name": "express-istatic",
+  "name": "istatic",
   "version": "0.0.1",
   "homepage": "http://github.com/ktmud/express-istatic",
   "description": "Add compressed inline css and scripts to your html, but write them as seperated files.",
