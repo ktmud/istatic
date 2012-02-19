@@ -15,7 +15,7 @@ va app = express.createServer();
 istatic.enable(app, { compress: false });
 ```
 
-The second parameter is optional. The available options are:
+The second parameter is an options object, which is optional. Available options are:
 
 ### compress
 
@@ -89,17 +89,21 @@ You can even excecute a local funtion just as what you will do in the template:
 
     #{usr.getId('haha...')}
 
+<hr>
+
 ## API
 
 **NOTE:** These APIs are not for templates.
 
-### istatic(filename, options)
+### istatic(filename, [options])
 
 Return the inlined string of some file.
 
 When passing `options`, these options will be saved as default options for any other later `istatic` or `istatic.enable` calls.
 
-But when you call `istatic(filename, options)` in a template, the options **will not** be save as default options. And APIs below is not suitable for an inside template call, too.
+But when you call `istatic(filename, options)` in a template, the options **will not** be save as default options.
+
+APIs listed below are not suitable for an inside template call.
 
 ### istatic.enable(app)
 
@@ -135,3 +139,15 @@ var str_pinyin_js = istatic('/utils/pinyin.js');
 ```
 
 Visit [大声看法](http://library.dakanfa.com) for a live example.
+
+## Licence 
+
+(The MIT License)
+
+Copyright (c) 2012 Jesse Yang <jyyjcc@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
