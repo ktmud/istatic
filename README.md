@@ -10,6 +10,7 @@ You don't have to worry about accessing the template's local variables. And you 
 
 ```javascript
 var istatic = require('istatic');
+va app = express.createServer();
 
 istatic.enable(app, { compress: false });
 ```
@@ -34,50 +35,55 @@ By default, the contents of your static files are cached in memory forever, unti
 
 ### charset
 
-The charset of your static file. Default: `utf-8`.
+The charset of your static files. Default: `utf-8`.
 
 ### js
 
-The options object to compress a js file. It will be passed to [UglifyJS](https://github.com/mishoo/UglifyJS).
+The options object for compressing a js file. It will be passed to [UglifyJS](https://github.com/mishoo/UglifyJS).
 
 Default: `undefined`.
 
 ### css
 
-The options object to compress a css file. It will be passed to [UglifyCSS](https://github.com/fmarcia/UglifyCSS).
+The options object for compressing a css file. It will be passed to [UglifyCSS](https://github.com/fmarcia/UglifyCSS).
 
 Default: `undefined`.
 
-For css and js options, you can define an `js.removals` or `css.removals`, to remove some contents (like `console.log()`) before compressing, making the inline css/script even more smaller, but still keep the maitainability of the code.
+For css and js options, you can define an `js.removals` or `css.removals`, to remove some contents (like `console.log()`) before compressing. This will make the inline css/script even more smaller, but still keep the maitainability of the code.
 
-By default, there's only `removals` for js, and it's an RegExp: `/\_log\(.+?\)/g`.
+By default, there's only `removals` for js, and it's an RegExp: ``/_log\(.+?\)/g``.
 
+## Use inside template: 
 
 Now you can include static files in your template like this:
 
-    #{istatic('js/filename.js', true)}
+    #{istatic(filename, [options])}
 
-### Parameters
+`filename` is the path of your static file. If it begins with a '/', the real path will be `process.cwd() + filename`. Otherwise, the file will be looked up from the root of your inline static files, as you configured before.   
 
-```javascript
-istatic(filename, [forceReload])
-```
+You can set available options above, except for `root` and `ttl`. A `fresh` option is available for you to set this `istatic` call always read from file directly.
 
-#### filename *required*
+**Be careful**, since `jade` can not correctly parse curly braces inside a couple of curly braces, don't write:
 
-The path to your file. If it begins with a '/', the real path will be `process.cwd() + filename`. Otherwise, the file will be looked up from the root of your inline static files, as you configured before.   
+    script
+      #{istatic('js/my.js', { showPath: (DEBUG ? true : false) })}
 
-#### forceReload
+Write like this instead:
 
-Whether to reload this file everytime the `istatic` happens.
+    - istatic_opt = { showPath: (DEBUG ? true : false) }
+    script
+      #{istatic('js/my.js', istatic_opt)}
+
+And it's definitely easier to read and maintain, too.
 
 ## Get access to templates' local variables:
 
-Just get access to the `locals` in the form you already very familiar with:
+Just get in touch with them in the form you already very familiar with:
    
     #{data.title}
 
-Attention, no matter what templating language you are using, you must always use this kind of syntax in your static files. 
+**Attention:** no matter what templating language you are using, you must always use this syntax in your static files.
+And don't put `{}` inside the curly braces. This is for performance consideration.
 
 You can even excecute a local funtion just as what you will do in the template:  
 
@@ -87,9 +93,13 @@ You can even excecute a local funtion just as what you will do in the template:
 
 **NOTE:** These APIs are not for templates.
 
-### istatic(filename, [forceReload, options])
+### istatic(filename, options)
 
-Get the inlined string of some file. When passing `options`, these options will be treated as default options for any other later `istatic` calls.
+Return the inlined string of some file.
+
+When passing `options`, these options will be saved as default options for any other later `istatic` or `istatic.enable` calls.
+
+But when you call `istatic(filename, options)` in a template, the options **will not** be save as default options. And APIs below is not suitable for an inside template call, too.
 
 ### istatic.enable(app)
 
@@ -97,7 +107,7 @@ To enable the `istatic` helper for an express `app`.
 
 ### istatic.default(options)
 
-Set default options for `istatic.enable` and `istatic.inline`. This can be implictly done by call `istatic(filename, _[forceReload, options]_)` and pass the `options` object.
+Set default options for `istatic.enable` and `istatic.inline`. This can be implictly done by call `istatic(filename, [forceReload, options])` and pass the `options` object.
 
 ### istatic.uglify.css(str, [options])
 
@@ -123,3 +133,5 @@ var compressed_js = istatic.uglify.js('// some javascript codes..');
 
 var str_pinyin_js = istatic('/utils/pinyin.js');
 ```
+
+Visit [大声看法](http://library.dakanfa.com) for a live example.
