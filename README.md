@@ -49,9 +49,7 @@ The options object for compressing a css file. It will be passed to [UglifyCSS](
 
 Default: `undefined`.
 
-For css and js options, you can define an `js.removals` or `css.removals`, to remove some contents (like `console.log()`) before compressing. This will make the inline css/script even more smaller, but still keep the maitainability of the code.
-
-By default, there's only `removals` for js, and it's an RegExp: ``/_log\(.+?\)/g``.
+For css and js options, you can define an `js.filter` or `css.filter`, to do some filtering(like remove `console.log()`) before compressing.
 
 ## Use inside template: 
 
