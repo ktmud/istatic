@@ -26,29 +26,39 @@ The second parameter is an options object, which is optional. Available options 
   <tr>
     <th>root</th>
     <td>The root of your inline static files.</td>
-    <td>`process.cwd() + '/public/'`. </td>
+    <td>
+    `process.cwd() + '/public/'`
+     </td>
   </tr>
   <tr>
     <th>ttl</th>
     <td>By default, the contents of your static files are cached in memory forever, until the process dies. You can set the `ttl` to a number of seconds, so the cache will be cleared every that much of time.
     </td>
-    <td>`undefined`</td>
+    <td>
+    `undefined`
+    </td>
   </tr>
   <tr>
     <th>charset </th>
     <td>The charset of your static files.</td>
-    <td>`utf-8`</td>
+    <td>
+    `utf-8`
+    </td>
   </tr>
   <tr>
     <th>js</th>
     <td>The options object for compressing a js file. It will be passed to [UglifyJS](https://github.com/mishoo/UglifyJS). </td>
-    <td>`undefined`</td>
+    <td>
+    `undefined`
+    </td>
   </tr>
   <tr>
     <th>css</th>
     <td>The options object for compressing a css file. It will be passed to [UglifyCSS](https://github.com/fmarcia/UglifyCSS).
     </td>
-    <td>`undefined`</td>
+    <td>
+    `undefined`
+    </td>
 </tr>
 </table>
 
@@ -66,7 +76,7 @@ eg.
 }
 ```
 
-## Usage inside a template: 
+## In template: 
 
 Now you can include static files in your template like this:
 
@@ -89,7 +99,7 @@ Write like this instead:
 
 And it's definitely easier to read and maintain, too.
 
-## Get access to templates' local variables:
+## Templates' Local Variables:
 
 Just get in touch with them in the form you already very familiar with:
    
@@ -133,11 +143,6 @@ Uglify some css string. Options are passed to UglifyCSS.
 ### istatic.uglify.js(str, [options])
 
 Uglify some js string. Options are passed to UglifyJS.
-
-## Outside template usage:
-
-    var istatic = require('istatic');
-    var some_js_str = istatic('/util/something.js', { compress: true });
 
 ## Example 
 
