@@ -109,7 +109,7 @@ To enable the `istatic` helper for an express `app`.
 
 ### istatic.default(options)
 
-Set default options for `istatic.enable` and `istatic.inline`. This can be implictly done by call `istatic(filename, [forceReload, options])` and pass the `options` object.
+Specificly set default options for `istatic('filepath')`, which will be set implicitly at the first call of `istatic('filename', options)`.
 
 ### istatic.uglify.css(str, [options])
 
@@ -118,6 +118,11 @@ Uglify some css string. Options are passed to UglifyCSS.
 ### istatic.uglify.js(str, [options])
 
 Uglify some js string. Options are passed to UglifyJS.
+
+## Outside template usage:
+
+    var istatic = require('istatic');
+    var some_js_str = istatic('/util/something.js', { compress: true });
 
 ## Example 
 
