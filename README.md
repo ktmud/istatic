@@ -17,41 +17,56 @@ istatic.enable(app, { compress: false });
 
 The second parameter is an options object, which is optional. Available options are:
 
-### compress
-
-Whether to compress the css or js. Default: `true`.
-
-### showPath 
-
-Whether to include the file's path in the output. Default: `false`.
-
-### root 
-
-The root of your inline static files. Default: `process.cwd() + '/public/'`.
-
-### ttl
-
-By default, the contents of your static files are cached in memory forever, until the process dies. You can set the `ttl` to a number of seconds, so the cache will be cleared every that much of time.
-
-### charset
-
-The charset of your static files. Default: `utf-8`.
-
-### js
-
-The options object for compressing a js file. It will be passed to [UglifyJS](https://github.com/mishoo/UglifyJS).
-
-Default: `undefined`.
-
-### css
-
-The options object for compressing a css file. It will be passed to [UglifyCSS](https://github.com/fmarcia/UglifyCSS).
-
-Default: `undefined`.
+<table>
+  <tr>
+  	<th>name</th>
+  	<th>description</th>
+  	<th>default</th>
+  </tr>
+  <tr>
+    <th>root</th>
+    <td>The root of your inline static files.</td>
+    <td>`process.cwd() + '/public/'`. </td>
+  </tr>
+  <tr>
+    <th>ttl</th>
+    <td>By default, the contents of your static files are cached in memory forever, until the process dies. You can set the `ttl` to a number of seconds, so the cache will be cleared every that much of time.
+    </td>
+    <td>`undefined`</td>
+  </tr>
+  <tr>
+    <th>charset </th>
+    <td>The charset of your static files.</td>
+    <td>`utf-8`</td>
+  </tr>
+  <tr>
+    <th>js</th>
+    <td>The options object for compressing a js file. It will be passed to [UglifyJS](https://github.com/mishoo/UglifyJS). </td>
+    <td>`undefined`</td>
+  </tr>
+  <tr>
+    <th>css</th>
+    <td>The options object for compressing a css file. It will be passed to [UglifyCSS](https://github.com/fmarcia/UglifyCSS).
+    </td>
+    <td>`undefined`</td>
+</tr>
+</table>
 
 For css and js options, you can define an `js.filter` or `css.filter`, to do some filtering(like remove `console.log()`) before compressing.
 
-## Use inside template: 
+eg.
+
+```javascript
+{
+  js: {
+    filter: function(str) {
+      return str.replace(/console.log(.+?)/, '');
+    }
+  }
+}
+```
+
+## Usage inside a template: 
 
 Now you can include static files in your template like this:
 
@@ -68,7 +83,7 @@ You can set available options above, except for `root` and `ttl`. A `fresh` opti
 
 Write like this instead:
 
-    - istatic_opt = { showPath: (DEBUG ? true : false) }
+    istatic_opt = { showPath: (DEBUG ? true : false) }
     script
       #{istatic('js/my.js', istatic_opt)}
 
@@ -156,7 +171,7 @@ script
   !{istatic('js/log_user.js')}
 ```
 
-In **/view/log_user.js**:
+In **/public/js/log_user.js**:
 
 ```javascript
 var user = "#{user}"
