@@ -126,6 +126,8 @@ Uglify some js string. Options are passed to UglifyJS.
 
 ## Example 
 
+In **/app.js**:
+
 ```javascript
 var express = require('express');
 var istatic = require('istatic');
@@ -139,6 +141,26 @@ var compressed_css = istatic.uglify.css('.class1 { font: Arial; }');
 var compressed_js = istatic.uglify.js('// some javascript codes..');
 
 var str_pinyin_js = istatic('/utils/pinyin.js');
+
+app1.get('/example', function(req, res, next) {
+  res.render('example.jade', {
+    user: req.user
+  });
+});
+```
+
+In **/view/example.jade**:
+
+```haml
+script
+  !{istatic('js/log_user.js')}
+```
+
+In **/view/log_user.js**:
+
+```javascript
+var user = "#{user}"
+user && $.post('/log', { user: user });
 ```
 
 ## Licence 
