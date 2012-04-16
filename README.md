@@ -6,16 +6,21 @@ Add compressed inline css and scripts to your html, but write them as seperated 
 
 You don't have to worry about accessing the template's local variables. And you can even include a `.less` file.
 
+You may also like to have a loot at [autostatic](https://github.com/ktmud/autostatic).
+
 ## Usage:
 
 ```javascript
 var istatic = require('istatic');
 va app = express.createServer();
 
-istatic.enable(app, { compress: false });
+app.helpers({
+  istatic: istatic.serve({ compress: false })
+});
 ```
+The parameter passed to `istatic.serve` is an options object, which is optional.
 
-The second parameter is an options object, which is optional. Available options are:
+Available options are:
 
 <table>
   <tr>
@@ -46,6 +51,20 @@ The second parameter is an options object, which is optional. Available options 
     </td>
   </tr>
   <tr>
+    <th>compress </th>
+    <td>Whether to compress the included contents.</td>
+    <td>
+    true
+    </td>
+  </tr>
+  <tr>
+    <th>debug</th>
+    <td>When set to true, will output the absolute path of included file.</td>
+    <td>
+    false || <code>process.env.DEBUG</code>
+    </td>
+  </tr>
+  <tr>
     <th>js</th>
     <td>The options object for compressing a js file. It will be passed to <a href="https://github.com/mishoo/UglifyJS">UglifyJS</a>. </td>
     <td>
@@ -58,7 +77,7 @@ The second parameter is an options object, which is optional. Available options 
     <td>
     undefined
     </td>
-</tr>
+  </tr>
 </table>
 
 For css and js options, you can define an `js.filter` or `css.filter`, to do some filtering(like remove `console.log()`) before compressing.
@@ -121,19 +140,19 @@ You can even excecute a local funtion just as what you will do in the template:
 
 Return the inlined string of some file.
 
-When passing `options`, these options will be saved as default options for any other later `istatic` or `istatic.enable` calls.
+Everytime you call `istatic` directly, it the `options` is given, these options will be saved as default options for any other later `istatic` or `istatic.serve` calls.
 
-But when you call `istatic(filename, options)` in a template, the options **will not** be save as default options.
+But when you call `istatic(filename, options)` from a template, the options **will not** be saved as default options.
 
 APIs listed below are not suitable for an inside template call.
 
-### istatic.enable(app)
+### istatic.serve([options])
 
-To enable the `istatic` helper for an express `app`.
+To return a function of `istatic(filename, [options])`, to read the file.  This is typically used as an express helper.
 
 ### istatic.default(options)
 
-Specificly set default options for `istatic('filepath')`, which will be set implicitly at the first call of `istatic('filename', options)`.
+Specificly set default options for `istatic('filepath')`, which will be set implicitly at the first call of `istatic('filename', options)` or `istatic.serve(options)`.
 
 ### istatic.uglify.css(str, [options])
 
@@ -154,11 +173,17 @@ var istatic = require('istatic');
 var app1 = express.createServer();
 var app2 = express.createServer();
 
-istatic.default({ compress: false }).enable(app1).enable(app2);
+app1.helpers({
+  istatic: istatic.serve()
+});
+app2.helpers({
+  istatic: istatic.serve({ compress: false })
+});
 
 var compressed_css = istatic.uglify.css('.class1 { font: Arial; }');
 var compressed_js = istatic.uglify.js('// some javascript codes..');
 
+// will be compressed
 var str_pinyin_js = istatic('/utils/pinyin.js');
 
 app1.get('/example', function(req, res, next) {
