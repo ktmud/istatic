@@ -11,7 +11,7 @@
     "less": ">= 1.0",
     "debug": "*",
     "stylus": ">= 0.1",
-    "uglify-js": "1.3.4",
+    "uglify-js": "1.3.x",
     "uglifycss": ">= 0.0.5"
   },
   "engines": {
