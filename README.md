@@ -11,7 +11,7 @@ You may also like to have a loot at [autostatic](https://github.com/ktmud/autost
 ## Usage:
 
 ```javascript
-var istatic = require('istatic');
+var istatic = require('express-istatic');
 va app = express.createServer();
 
 app.helpers({
@@ -168,7 +168,7 @@ In **/app.js**:
 
 ```javascript
 var express = require('express');
-var istatic = require('istatic');
+var istatic = require('express-istatic');
 
 var app1 = express.createServer();
 var app2 = express.createServer();
