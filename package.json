@@ -1,6 +1,6 @@
 {
-  "name": "istatic",
-  "version": "0.0.8-1",
+  "name": "express-istatic",
+  "version": "0.0.9",
   "homepage": "http://github.com/ktmud/express-istatic",
   "description": "Add compressed inline css and scripts to your html, but write them as seperated files.",
   "keywords": [ "express", "static files include", "compression", "minify" ],
@@ -11,7 +11,7 @@
     "less": ">= 1.0",
     "debug": "*",
     "stylus": ">= 0.1",
-    "uglify-js": ">= 1.0",
+    "uglify-js": "1.3.4",
     "uglifycss": ">= 0.0.5"
   },
   "engines": {
