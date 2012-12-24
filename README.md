@@ -14,7 +14,7 @@ You may also like to have a loot at [autostatic](https://github.com/ktmud/autost
 var istatic = require('express-istatic');
 va app = express.createServer();
 
-app.helpers({
+app.locals({
   istatic: istatic.serve({ compress: false })
 });
 ```
@@ -173,10 +173,10 @@ var istatic = require('express-istatic');
 var app1 = express.createServer();
 var app2 = express.createServer();
 
-app1.helpers({
+app1.locals({
   istatic: istatic.serve()
 });
-app2.helpers({
+app2.locals({
   istatic: istatic.serve({ compress: false })
 });
 
