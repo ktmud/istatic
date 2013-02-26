@@ -100,7 +100,9 @@ Now you can include static files in your template like this:
 
     #{istatic(filename, [options])}
 
-`filename` is the path of your static file. If it begins with a '/', the real path will be `process.cwd() + filename`. Otherwise, the file will be looked up from the root of your inline static files, as you configured before.   
+`filename` is the path of your static file.
+
+If it begins with a `'/'`, the real path will be `process.cwd() + filename`. Otherwise, the file will be looked up from the root of your inline static files, as you configured before.   
 
 You can set available options above, except for `root` and `ttl`. A `fresh` option is available for you to set this `istatic` call always read from file directly.
 
