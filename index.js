@@ -4,13 +4,16 @@ var BasicCache = require('basiccache')
 
 var reg_val = /#{(.+?)}/g
 
-var defaultOptions
+var defaultOptions = {
+  charset: 'utf-8',
+  ttl: 60 * 60,
+}
 var defaultRead
 
 
 var exports = function(path, options) {
   if (!defaultRead) {
-    if (options) defaultOptions = options
+    exports.default(options)
     defaultRead = theRead(defaultOptions)
   }
   return defaultRead(path, options)
@@ -19,7 +22,10 @@ var exports = function(path, options) {
 exports.uglify = uglify
 
 exports.default = function(options) {
-  defaultOptions = options
+  defaultOptions = options = {
+    ...defaultOptions,
+    ...options
+  }
   defaultRead = theRead(options)
 }
 
@@ -31,8 +37,11 @@ exports.serve = function(options) {
   if ('string' === typeof options) {
     options = { root: options }
   }
+  if ('undefined' == typeof options) {
+    options = defaultOptions
+  }
   if (!defaultRead) {
-    read = defaultRead = theRead(options || defaultOptions)
+    read = defaultRead = theRead(options)
   } else {
     read = options ? theRead(options) : defaultRead
   }
